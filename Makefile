@@ -1,83 +1,15 @@
-# Target programs
-programs := \
-	queue_tester_example.x \
-	uthread_hello.x \
-	uthread_yield.x \
-	sem_simple.x \
-	sem_count.x \
-	sem_buffer.x \
-	sem_prime.x
+# Target library
+lib	:=	libuthread.a
+objs := queue.o uthread.o sem.o context.o preempt.o
+CC := gcc
+CFLAGS := -Wall -Werror -Wextra
+CFLAGS += -c 
 
-# User-level thread library
-UTHREADLIB := libuthread
-UTHREADPATH := ../$(UTHREADLIB)
-libuthread := $(UTHREADPATH)/$(UTHREADLIB).a
+libuthread.a: $(objs)
+	ar rcs libuthread.a $(objs)
 
-# Default rule
-all: $(programs)
-
-# Avoid builtin rules and variables
-MAKEFLAGS += -rR
-
-# Don't print the commands unless explicitly requested with `make V=1`
-ifneq ($(V),1)
-Q = @
-V = 0
-endif
-
-# Current directory
-CUR_PWD := $(shell pwd)
-
-# Define compilation toolchain
-CC	= gcc
-
-# General gcc options
-CFLAGS	:= -Wall -Wextra -Werror
-CFLAGS	+= -pipe
-## Debug flag
-ifneq ($(D),1)
-CFLAGS	+= -O2
-else
-CFLAGS	+= -g
-endif
-## Include path
-CFLAGS 	+= -I$(UTHREADPATH)
-## Dependency generation
-CFLAGS	+= -MMD
-
-# Linker options
-LDFLAGS := -L$(UTHREADPATH) -luthread
-
-# Application objects to compile
-objs := $(patsubst %.x,%.o,$(programs))
-
-# Include dependencies
-deps := $(patsubst %.o,%.d,$(objs))
--include $(deps)
-
-# Rule for libuthread.a
-$(libuthread): FORCE
-	@echo "MAKE	$@"
-	$(Q)$(MAKE) V=$(V) D=$(D) -C $(UTHREADPATH)
-
-# Generic rule for linking final applications
-%.x: %.o $(libuthread)
-	@echo "LD	$@"
-	$(Q)$(CC) -o $@ $< $(LDFLAGS)
-
-# Generic rule for compiling objects
 %.o: %.c
-	@echo "CC	$@"
-	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) $o $<
 
-# Cleaning rule
-clean: FORCE
-	@echo "CLEAN	$(CUR_PWD)"
-	$(Q)$(MAKE) V=$(V) D=$(D) -C $(UTHREADPATH) clean
-	$(Q)rm -rf $(objs) $(deps) $(programs)
-
-# Keep object files around
-.PRECIOUS: %.o
-.PHONY: FORCE
-FORCE:
-
+clean:
+	rm -f *.o *.a
