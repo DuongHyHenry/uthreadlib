@@ -8,7 +8,7 @@ CFLAGS += -c
 libuthread.a: $(objs)
 	ar rcs libuthread.a $(objs)
 
-%.o: %.c
+%.o: %.c 
 	$(CC) $(CFLAGS) $o $<
 
 clean:
