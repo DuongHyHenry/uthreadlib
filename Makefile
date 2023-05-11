@@ -1,6 +1,6 @@
 # Target library
 lib	:=	libuthread.a
-objs := queue.o uthread.o context.o sem.o #preempt.o
+objs := queue.o uthread.o context.o sem.o preempt.o
 
 libuthread.a: $(objs)
 	ar rcs libuthread.a $(objs)
