@@ -5,11 +5,11 @@ CC := gcc
 CFLAGS := -Wall -Werror -Wextra
 CFLAGS += -c
 
-libuthread.a: $(objs)
-	ar rcs libuthread.a $(objs)
+libuthread.a: queue.o uthread.o sem.o context.o preempt.o
+	ar rcs libuthread.a queue.o uthread.o sem.o context.o preempt.o
 
 %.o: %.c
-	$(CC) $(CFLAGS) $o $<
+	gcc -Wall -Werror -Wextra $o $<
 
 clean:
 	rm -f *.o *.a
