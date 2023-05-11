@@ -93,7 +93,7 @@ int uthread_create(uthread_func_t func, void *arg)
 	newThread->context = calloc(1, sizeof(uthread_ctx_t));
 
 	//if memory failed to allocate, return -1
-	if ((newThread == NULL) || (newThread->stackPointer == NULL) || (newThead->context == NULL)) {
+	if ((newThread == NULL) || (newThread->stackPointer == NULL) || (newThread->context == NULL)) {
 		return -1;
 	}
 
