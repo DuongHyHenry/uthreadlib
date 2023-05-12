@@ -91,10 +91,10 @@ Due to time constraints, we weren't able to implement this phase of the project
 ### Testing
 In regards to testing, we ran the sample files provided by the Professor and 
 compared our output with the expected output. For queue, we created our own 
-tester files and added some of our own cases. We made many test cases that 
+tester file based off the professor's tester. We made  test cases that 
 accounted for very specific situtations to make sure our program would be able 
-to handle edge cases. We also had to test our program to handle error cases, 
-such as when the data and queue are empty. 
+to handle edge cases. We also had to make our program account for error cases 
+such as when the data is NULL.
 
 In terms of debugging, we had to redo our implementation and rethink our current 
 plan for each phase. In most of the phases, especially phase 2, we thought we 
