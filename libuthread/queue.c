@@ -35,9 +35,19 @@ queue_t queue_create(void)
 int queue_destroy(queue_t queue)
 {
 	
+	//checks if queue is NULL
+	if (queue == NULL) {
+		return -1;
+	}
+
 	//frees the space dynamically allocated by queue
 	free(queue);
 	queue = NULL;
+
+	//checks is space was successfully freed
+	if (queue != NULL) {
+		return -1;
+	}
 	return 0;
 }
 
